@@ -18,6 +18,8 @@
         "fzaninotto/faker": "^1.8"
     },
     "autoload": {
-        "psr-4": { "Globalis\\MysqlDataAnonymizer\\": "src/" }
+        "psr-4": {
+            "N3XT0R\\MysqlDataAnonymizer\\": "src/"
+        }
     }
 }

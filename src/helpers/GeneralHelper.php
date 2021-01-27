@@ -1,6 +1,6 @@
 <?php
 
-namespace Globalis\MysqlDataAnonymizer\Helpers;
+namespace N3XT0R\MysqlDataAnonymizer\Helpers;
 
 class GeneralHelper
 {

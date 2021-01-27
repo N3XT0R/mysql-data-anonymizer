@@ -1,7 +1,7 @@
 <?php
 
 require './vendor/autoload.php';
-use Globalis\MysqlDataAnonymizer\Anonymizer;
+use N3XT0R\MysqlDataAnonymizer\Anonymizer;
 
 $anonymizer = new Anonymizer();
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Globalis\MysqlDataAnonymizer;
+namespace N3XT0R\MysqlDataAnonymizer;
 
 class Blueprint
 {
