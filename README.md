@@ -1,12 +1,13 @@
 # MySQL Data Anonymizer
 
-MySQL Data Anonymizer is a PHP library that anonymize your data in the database.
-Always use the production database to test your programs, but worry about leaking cutomer data?
-MySQL Data Anonymizer is the right tool for you. This tool helps you replace all sensitive data with fake data.
-Fake data is provided by a [fzaninotto/Faker](https://github.com/fzaninotto/Faker) generator by default, but you can also use your own generator.
-To improve the performance, [AMP/MySQL](https://github.com/amphp/mysql) is used to create multiple MySQL connections concurrently.
+MySQL Data Anonymizer is a PHP library that anonymize your data in the database. Always use the production database to
+test your programs, but worry about leaking cutomer data? MySQL Data Anonymizer is the right tool for you. This tool
+helps you replace all sensitive data with fake data. Fake data is provided by
+a [fzaninotto/Faker](https://github.com/fzaninotto/Faker) generator by default, but you can also use your own generator.
+To improve the performance, [AMP/MySQL](https://github.com/amphp/mysql) is used to create multiple MySQL connections
+concurrently.
 
-MySQL Data Anonymizer requires PHP >= 7.2.
+MySQL Data Anonymizer requires PHP >= 7.4.
 
 # Table of Contents
 
@@ -14,11 +15,10 @@ MySQL Data Anonymizer requires PHP >= 7.2.
 - [Example code](#example-code)
 - [Helpers and providers](#helpers-and-providers)
 
-
-
 ## Configuration
 
 Rename the config-sample.php file to config.php and modify the configurations to suit your environment.
+
 ```php
 <?php return array (
     'DB_HOST' => '127.0.0.1',
@@ -30,14 +30,19 @@ Rename the config-sample.php file to config.php and modify the configurations to
     'DEFAULT_GENERATOR_LOCALE' => 'en_US'
 );
 ```
-NB_MAX_MYSQL_CLIENT is the max number of MySQL connections simultaneously when executing your scripts.
-By default, MySQL supports at most 151 connections simultaneously, but you can modify your MySQL variable 'max_connections' to break this restriction.
 
-NB_MAX_PROMISE_IN_LOOP is the max number of promises we keep in the promise table. Each promise represents the future result of an SQL query. The larger the number, the faster the execution will be. But you have to be careful that holding a large number of promises will consume too much memory and CPU resources. If your processor can't afford it, the run time will be at least 10 times longer than expected. <strong>If you don't know too much about the performance of your processor, just leave this variable to 50, or even 20 if you are not quite confident on it</strong>.
+NB_MAX_MYSQL_CLIENT is the max number of MySQL connections simultaneously when executing your scripts. By default, MySQL
+supports at most 151 connections simultaneously, but you can modify your MySQL variable 'max_connections' to break this
+restriction.
 
-DEFAULT_GENERATOR_LOCALE influences the generated data's language and format by Faker's generator. You can find the full list of locales from [here](https://github.com/fzaninotto/Faker/tree/master/src/Faker/Provider)
+NB_MAX_PROMISE_IN_LOOP is the max number of promises we keep in the promise table. Each promise represents the future
+result of an SQL query. The larger the number, the faster the execution will be. But you have to be careful that holding
+a large number of promises will consume too much memory and CPU resources. If your processor can't afford it, the run
+time will be at least 10 times longer than expected. <strong>If you don't know too much about the performance of your
+processor, just leave this variable to 50, or even 20 if you are not quite confident on it</strong>.
 
-
+DEFAULT_GENERATOR_LOCALE influences the generated data's language and format by Faker's generator. You can find the full
+list of locales from [here](https://github.com/fzaninotto/Faker/tree/master/src/Faker/Provider)
 
 ## Example code
 
@@ -45,7 +50,7 @@ DEFAULT_GENERATOR_LOCALE influences the generated data's language and format by 
 <?php
 
 require './vendor/autoload.php';
-use Globalis\MysqlDataAnonymizer\Anonymizer;
+use N3XT0R\MysqlDataAnonymizer\Anonymizer;
 
 $anonymizer = new Anonymizer();
 
@@ -98,59 +103,23 @@ echo 'Anonymization has been completed!';
 
 ```
 
-For more fake data types and details about fake data generator, you can find what you want from [fzaninotto/Faker's Github page](https://github.com/fzaninotto/Faker)
+For more fake data types and details about fake data generator, you can find what you want
+from [fzaninotto/Faker's Github page](https://github.com/fzaninotto/Faker)
 
-
-## Helpers and providers
-
-You can add your own helper and generator classes in src/helpers and src/providers. File names of helpers and providers need to keep these format : 'XXXHelper.php', 'XXXProvider.php', or they won't be loaded.
-
-An example of customize helper:
-
-```php
-<?php
-
-namespace Globalis\MysqlDataAnonymizer\Helpers; //Default namespace, should always use this one
-
-class StrHelper //Class name needs to be the same as file name
-{
-    public static function toLower($string)
-    {
-        return strtolower($string);
-    }
-}
-```
-
-Then in your script, you can use it like this:
-```php
-<?php
-
-require './vendor/autoload.php';
-use Globalis\MysqlDataAnonymizer\Anonymizer;
-use Globalis\MysqlDataAnonymizer\Helpers;
-
-$anonymizer = new Anonymizer();
-
-$anonymizer->table('users', function ($table) {
-    
-    $table->primary('id');
-    $table->column('name')->replaceByFields(function ($rowData, $generator) {
-        return Helpers\StrHelper::toLower(($rowData['name']));
-    });
-}
-```
+## Providers
 
 An example of customize provider:
+
 ```php
 <?php
 
-namespace Globalis\MysqlDataAnonymizer\Provider; //Default namespace, should always use this one
+namespace N3XT0R\MysqlDataAnonymizer\Provider; //Default namespace, should always use this one
 
 class EnumProvider extends \Faker\Provider\Base //Class name needs to be the same as file name, and provider classes need to extend \Faker\Provider\Base
 {
 
     //This simple method returns a fruit randomly from the list
-    public function fruit()
+    public function fruit() :string
     {
         $enum = ['apple', 'orange', 'banana'];
 
@@ -160,11 +129,12 @@ class EnumProvider extends \Faker\Provider\Base //Class name needs to be the sam
 ```
 
 Then in your script, you can use it like this:
+
 ```php
 <?php
 
 require './vendor/autoload.php';
-use Globalis\MysqlDataAnonymizer\Anonymizer;
+use N3XT0R\MysqlDataAnonymizer\Anonymizer;
 
 $anonymizer = new Anonymizer();
 
@@ -176,5 +146,5 @@ $anonymizer->table('users', function ($table) {
 }
 ```
 
-forked from globalis-ms
+forked from globalis-ms - optimized to actual PSR-Standards and clean code.
 
