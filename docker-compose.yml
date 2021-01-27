@@ -16,8 +16,8 @@ services:
   php:
     build:
       context: .
-      # dockerfile: app.Dockerfile
-      dockerfile: app-temp.Dockerfile #PHP8
+      dockerfile: app.Dockerfile #PHP7.4
+      #dockerfile: app-temp.Dockerfile #PHP8
     volumes:
       - .:/var/www/html/:consistent
     depends_on:
